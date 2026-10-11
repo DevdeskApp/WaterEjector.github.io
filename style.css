@@ -2798,7 +2798,7 @@ tbody tr:hover td:nth-child(2) {
    ======================================================== */
 .quick-tools-bar {
     width: 100%;
-    max-width: 860px;
+    max-width: 990px;
     margin: 0 auto 24px auto;
     position: relative;
     z-index: 5;
@@ -2807,7 +2807,7 @@ tbody tr:hover td:nth-child(2) {
 
 .quick-tools-wrapper {
     display: grid;
-    grid-template-columns: repeat(8, 1fr);
+    grid-template-columns: repeat(9, 1fr);
     gap: 6px;
     background: var(--surface);
     border: 1px solid var(--gray-light);
@@ -2937,10 +2937,10 @@ tbody tr:hover td:nth-child(2) {
     color: #ffffff !important;
 }
 
-/* Tablet Screens (601px to 840px) */
-@media (max-width: 840px) and (min-width: 601px) {
+/* Tablet Screens (601px to 940px) */
+@media (max-width: 940px) and (min-width: 601px) {
     .quick-tools-wrapper {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         gap: 6px;
     }
     .quick-tool-tab {
