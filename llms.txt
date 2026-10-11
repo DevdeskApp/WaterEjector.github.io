@@ -15,6 +15,7 @@ WaterEjector provides specialized acoustic frequency tools, haptic vibration mod
 - [Online Microphone Tester](https://waterejector.devdeskapp.com/mic-test/): Client-side 5-second voice recording and playback diagnostic to check microphone clarity, background noise, and water blockage.
 - [Speaker Rescue Arcade Game](https://waterejector.devdeskapp.com/game/): Free browser mini-game simulating 165Hz acoustic shockwave physics to blast falling water droplets and dust out of smartphone speaker grilles.
 - [Sonic Droplet Ghost Challenge](https://waterejector.devdeskapp.com/sonic-droplet/): Free acoustic obstacle arcade game pulsing water droplets through speaker grille barriers with custom cosmetic skins and zero-backend ghost replay racing.
+- [Gemini Watermark Remover](https://gemini-watermark-remover.devdeskapp.com/): Sister AI web tool by DevDeskApp using mathematical alpha unblending to remove watermarks from Google Gemini images, Nano Banana art, and Flow/Omni/Veo 3 AI videos.
 
 ## Documentation and Transparency
 
