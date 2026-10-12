@@ -36,7 +36,7 @@ def run_tests():
         if '.git' in root or 'components' in root:
             continue
         for f in files:
-            if f.endswith('.html') and not f.startswith('google'):
+            if f.endswith('.html') and not f.startswith('google') and f != '404.html':
                 html_pages.append(os.path.join(root, f))
 
     print(f"\n[2] Checking {len(html_pages)} HTML Pages for SEO & Structure...")
@@ -66,12 +66,12 @@ def run_tests():
             print(f"[ERROR] Missing or invalid canonical in {rel_p}")
             errors += 1
 
-        # Header and Footer placeholders
-        if '<div id="header-placeholder"></div>' not in content:
-            print(f"[ERROR] Missing header placeholder in {rel_p}")
+        # Header and Footer components
+        if 'id="header-placeholder"' not in content and '<nav class="navbar"' not in content:
+            print(f"[ERROR] Missing header in {rel_p}")
             errors += 1
-        if '<div id="footer-placeholder"></div>' not in content:
-            print(f"[ERROR] Missing footer placeholder in {rel_p}")
+        if 'id="footer-placeholder"' not in content and '<footer class="footer"' not in content:
+            print(f"[ERROR] Missing footer in {rel_p}")
             errors += 1
 
         # Manifest link

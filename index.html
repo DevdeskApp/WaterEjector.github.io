@@ -7,6 +7,20 @@
     <meta name="description"
         content="Play the 165Hz water eject sound to push water and dust out of your phone speaker. Free, no app, works on iPhone & Android.">
     <title>Water Eject Sound – Free Speaker Cleaner Online (165Hz) | WaterEjector</title>
+        <!-- Canonical Path Normalizer -->
+    <script>
+        (function() {
+            var p = window.location.pathname;
+            if (p.endsWith('/index.html')) {
+                var clean = p.slice(0, -10) || '/';
+                if (window.history && window.history.replaceState) {
+                    window.history.replaceState(null, '', clean + window.location.search + window.location.hash);
+                } else {
+                    window.location.replace(clean + window.location.search + window.location.hash);
+                }
+            }
+        })();
+    </script>
     <link rel="canonical" href="https://waterejector.devdeskapp.com/">
     <!-- Open Graph / Facebook / WhatsApp -->
     <meta property="og:type" content="website">
@@ -140,7 +154,243 @@
 </head>
 
 <body>
-    <div id="header-placeholder"></div>
+    <div id="header-placeholder">
+<nav class="navbar">
+    <div class="container">
+        <div class="nav-wrapper">
+            <a href="/" class="logo">
+                <svg viewBox="0 0 48 48" width="30" height="30" fill="none" xmlns="http://www.w3.org/2000/svg" style="border-radius: 8px; flex-shrink: 0;">
+                    <defs>
+                        <linearGradient id="wePurpleLogo" x1="4" y1="4" x2="44" y2="44" gradientUnits="userSpaceOnUse">
+                            <stop offset="0%" stop-color="#9333EA"/>
+                            <stop offset="50%" stop-color="#8B5CF6"/>
+                            <stop offset="100%" stop-color="#4F46E5"/>
+                        </linearGradient>
+                        <linearGradient id="weWaterLogo" x1="28" y1="12" x2="40" y2="30" gradientUnits="userSpaceOnUse">
+                            <stop offset="0%" stop-color="#38BDF8"/>
+                            <stop offset="100%" stop-color="#06B6D4"/>
+                        </linearGradient>
+                    </defs>
+                    <rect x="3" y="3" width="42" height="42" rx="13" fill="url(#wePurpleLogo)"/>
+                    <rect x="4" y="4" width="40" height="40" rx="12" stroke="rgba(255,255,255,0.25)" stroke-width="1.2"/>
+                    <path d="M12 20H16L21 15V33L16 28H12C11.45 28 11 27.55 11 27V21C11 20.45 11.45 20 12 20Z" fill="#FFFFFF"/>
+                    <path d="M25 19.5C26.3 20.8 27 22.3 27 24C27 25.7 26.3 27.2 25 28.5" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/>
+                    <path d="M29 16C31.2 18.2 32.5 21 32.5 24C32.5 27 31.2 29.8 29 32" stroke="#38BDF8" stroke-width="2.2" stroke-linecap="round"/>
+                    <path d="M35.5 14C35.5 14 39.5 19.5 39.5 22.5C39.5 24.9 37.7 26.8 35.5 26.8C33.3 26.8 31.5 24.9 31.5 22.5C31.5 19.5 35.5 14 35.5 14Z" fill="url(#weWaterLogo)"/>
+                    <ellipse cx="34.2" cy="21.5" rx="1.2" ry="1.8" transform="rotate(-20 34.2 21.5)" fill="#FFFFFF" fill-opacity="0.8"/>
+                </svg>
+                <span>WaterEjector</span>
+            </a>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="/" class="nav-link">Home</a></li>
+                
+                <!-- Tools Dropdown for Desktop & Mobile -->
+                <li class="dropdown">
+                    <a href="javascript:void(0)" class="nav-link dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false">
+                        <span>Tools</span>
+                        <svg class="dropdown-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-label="Tools Menu">
+                        <li role="none">
+                            <a href="/" class="dropdown-item" role="menuitem" data-path="/">
+                                <span class="dropdown-icon-box" aria-hidden="true">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+                                    </svg>
+                                </span>
+                                <div class="dropdown-item-content">
+                                    <span class="dropdown-item-title">Water Eject</span>
+                                    <span class="dropdown-item-desc">165Hz Sound Ejection</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li role="none">
+                            <a href="/deep-clean/" class="dropdown-item" role="menuitem" data-path="/deep-clean/">
+                                <span class="dropdown-icon-box" aria-hidden="true">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <circle cx="12" cy="12" r="6"></circle>
+                                        <circle cx="12" cy="12" r="2"></circle>
+                                    </svg>
+                                </span>
+                                <div class="dropdown-item-content">
+                                    <span class="dropdown-item-title">Deep Clean</span>
+                                    <span class="dropdown-item-desc">Speaker Dust Removal</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li role="none">
+                            <a href="/vibration/" class="dropdown-item" role="menuitem" data-path="/vibration/">
+                                <span class="dropdown-icon-box" aria-hidden="true">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="9" y="2" width="6" height="20" rx="2"></rect>
+                                        <path d="M3 8v8M6 5v14M18 5v14M21 8v8"></path>
+                                    </svg>
+                                </span>
+                                <div class="dropdown-item-content">
+                                    <span class="dropdown-item-title">Vibration Mode</span>
+                                    <span class="dropdown-item-desc">80Hz Haptic Pulse</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li role="none">
+                            <a href="/stereo-test/" class="dropdown-item" role="menuitem" data-path="/stereo-test/">
+                                <span class="dropdown-icon-box" aria-hidden="true">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                                        <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                                    </svg>
+                                </span>
+                                <div class="dropdown-item-content">
+                                    <span class="dropdown-item-title">Stereo Test</span>
+                                    <span class="dropdown-item-desc">L / R Channel Diagnostic</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li role="none">
+                            <a href="/frequency-generator/" class="dropdown-item" role="menuitem" data-path="/frequency-generator/">
+                                <span class="dropdown-icon-box" aria-hidden="true">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M2 12h3l3-9 4 18 4-9h6"></path>
+                                    </svg>
+                                </span>
+                                <div class="dropdown-item-content">
+                                    <span class="dropdown-item-title">Custom Hz</span>
+                                    <span class="dropdown-item-desc">1Hz – 20,000Hz Tone</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li role="none">
+                            <a href="/charging-port-fix/" class="dropdown-item" role="menuitem" data-path="/charging-port-fix/">
+                                <span class="dropdown-icon-box" aria-hidden="true">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="7" y="10" width="10" height="12" rx="2"></rect>
+                                        <path d="M9 10V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v5"></path>
+                                        <line x1="12" y1="13" x2="12" y2="16"></line>
+                                        <path d="M12 2v1"></path>
+                                    </svg>
+                                </span>
+                                <div class="dropdown-item-content">
+                                    <span class="dropdown-item-title">Wet Port Fix</span>
+                                    <span class="dropdown-item-desc">Moisture Detected Guide</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li role="none">
+                            <a href="/mic-test/" class="dropdown-item" role="menuitem" data-path="/mic-test/">
+                                <span class="dropdown-icon-box" aria-hidden="true">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                                        <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                                        <line x1="12" y1="19" x2="12" y2="23"></line>
+                                        <line x1="8" y1="23" x2="16" y2="23"></line>
+                                    </svg>
+                                </span>
+                                <div class="dropdown-item-content">
+                                    <span class="dropdown-item-title">Mic Test</span>
+                                    <span class="dropdown-item-desc">Microphone Test & Clean</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li role="none">
+                            <a href="/game/" class="dropdown-item" role="menuitem" data-path="/game/">
+                                <span class="dropdown-icon-box" aria-hidden="true" style="background: rgba(139, 92, 246, 0.15); color: #8B5CF6;">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="6" y1="12" x2="10" y2="12"></line>
+                                        <line x1="8" y1="10" x2="8" y2="14"></line>
+                                        <line x1="15" y1="13" x2="15.01" y2="13"></line>
+                                        <line x1="18" y1="11" x2="18.01" y2="11"></line>
+                                        <rect x="2" y="6" width="20" height="12" rx="6"></rect>
+                                    </svg>
+                                </span>
+                                <div class="dropdown-item-content">
+                                    <span class="dropdown-item-title">Speaker Rescue</span>
+                                    <span class="dropdown-item-desc">Water Eject Arcade Game</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li role="none">
+                            <a href="/sonic-droplet/" class="dropdown-item" role="menuitem" data-path="/sonic-droplet/">
+                                <span class="dropdown-icon-box" aria-hidden="true" style="background: rgba(6, 182, 212, 0.15); color: #06B6D4;">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+                                    </svg>
+                                </span>
+                                <div class="dropdown-item-content">
+                                    <span class="dropdown-item-title">Sonic Droplet</span>
+                                    <span class="dropdown-item-desc">Ghost Replay Challenge</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li role="none">
+                            <a href="https://gemini-watermark-remover.devdeskapp.com/" target="_blank" rel="noopener noreferrer" class="dropdown-item" role="menuitem" style="border-top: 1px solid rgba(139, 92, 246, 0.15); margin-top: 4px; padding-top: 8px;">
+                                <span class="dropdown-icon-box" aria-hidden="true" style="background: rgba(16, 185, 129, 0.15); color: #10B981;">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                                    </svg>
+                                </span>
+                                <div class="dropdown-item-content">
+                                    <span class="dropdown-item-title">Gemini Watermark Remover <span style="font-size: 0.65rem; background: rgba(16, 185, 129, 0.2); color: #059669; padding: 2px 6px; border-radius: 9999px; margin-left: 4px; font-weight: 700;">AI TOOL</span></span>
+                                    <span class="dropdown-item-desc">Video & AI Image Unblending</span>
+                                </div>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-muted); opacity: 0.6; margin-left: auto;">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                    <polyline points="15 3 21 3 21 9"></polyline>
+                                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                                </svg>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                
+                <li><a href="/game/" class="nav-link">Arcade Game</a></li>
+                <li><a href="/#how-it-works" class="nav-link">How It Works</a></li>
+                <li><a href="/#faq" class="nav-link">FAQ</a></li>
+                <li><a href="/contact/" class="nav-link">Contact</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <a href="https://buymeacoffee.com/devdeskapp" target="_blank" rel="noopener noreferrer" class="nav-bmc-btn" aria-label="Support with a Coffee" title="Buy me a coffee">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20 3H4v10c0 2.21 1.79 4 4 4h6c2.21 0 4-1.79 4-4v-3h2c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 5h-2V5h2v3zM4 19h16v2H4z"/></svg>
+                    <span>Coffee</span>
+                </a>
+                <button class="nav-install-btn" id="navInstallBtn" aria-label="Download App" title="Download App" style="display: none;">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    <span>Install</span>
+                </button>
+                <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle Dark Mode">
+                    <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</nav>
+    </div>
 
     <!-- Hero Section with Tool -->
     <section id="home" class="hero-section">
@@ -1240,7 +1490,68 @@
         </div>
     </section>
 
-    <div id="footer-placeholder"></div>
+    <div id="footer-placeholder">
+<footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>WaterEjector</h3>
+                    <p>Professional online tools to eject water, remove dust, and test your smartphone speakers and microphones instantly.</p>
+                    <div style="margin-top: 15px;">
+                        <a href="https://buymeacoffee.com/devdeskapp" target="_blank" rel="noopener noreferrer" class="footer-bmc-btn" aria-label="Support WaterEjector on Buy Me a Coffee">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink: 0;"><path d="M20 3H4v10c0 2.21 1.79 4 4 4h6c2.21 0 4-1.79 4-4v-3h2c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 5h-2V5h2v3zM4 19h16v2H4z"/></svg>
+                            <span>Buy me a coffee</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Pro Tools</h3>
+                    <ul>
+                        <li><a href="/deep-clean/">Deep Dust Clean</a></li>
+                        <li><a href="/vibration/">Vibration Mode</a></li>
+                        <li><a href="/stereo-test/">Stereo Balance Test</a></li>
+                        <li><a href="/frequency-generator/">Custom Frequency</a></li>
+                        <li><a href="/charging-port-fix/">Charging Port Fix</a></li>
+                        <li><a href="/mic-test/">Mic Tester</a></li>
+                        <li><a href="/game/">Speaker Rescue Game</a></li>
+                        <li><a href="/sonic-droplet/">Sonic Droplet Challenge</a></li>
+                        <li><a href="https://gemini-watermark-remover.devdeskapp.com/" target="_blank" rel="noopener noreferrer" style="color: #10B981; font-weight: 600;">Gemini Watermark Remover ↗</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/#how-it-works">How It Works</a></li>
+                        <li><a href="/#faq">FAQ</a></li>
+                        <li><a href="/about/">About Us</a></li>
+                        <li><a href="/contact/">Contact Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="/privacy-policy/">Privacy Policy</a></li>
+                        <li><a href="/terms-of-service/">Terms of Service</a></li>
+                        <li><a href="/disclaimer/">Disclaimer</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 WaterEjector. All rights reserved. | Supported by <a href="https://www.devdeskapp.com/" target="_blank" 
+rel="noopener" style="color: var(--primary-color); text-decoration: none; font-weight: 600;">DevDesk App</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cookie Consent Banner -->
+    <div id="cookieBanner" class="cookie-banner" style="display: none; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--surface); padding: 15px 25px; border-radius: 50px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 9999; border: 1px solid var(--gray-light); display: flex; align-items: center; gap: 20px; width: 90%; max-width: 600px; justify-content: space-between;">
+        <div style="font-size: 0.9rem; color: var(--text-primary); display: flex; align-items: center; gap: 10px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--primary-color); flex-shrink: 0;"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"></path><path d="M8.5 8.5v.01"></path><path d="M16 12.5v.01"></path><path d="M12 16v.01"></path><path d="M11 12.5v.01"></path></svg>
+            <span>We use cookies to improve your experience. <a href="/privacy-policy/" style="color: var(--primary-color); text-decoration: none;">Learn more</a>.</span>
+        </div>
+        <button id="acceptCookies" class="btn btn-primary" style="padding: 8px 20px; border-radius: 30px; font-size: 0.85rem; flex-shrink: 0;">Got it!</button>
+    </div>
+    </div>
 
     <script defer src="script.js?v=1791231741"></script>
 

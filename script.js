@@ -865,23 +865,29 @@ function setupThemeToggle() {
 }
 
 async function loadComponents() {
+  const headerPlaceholder = document.getElementById('header-placeholder');
+  const footerPlaceholder = document.getElementById('footer-placeholder');
+
+  // If already statically baked into DOM, skip redundant network fetches
+  if (headerPlaceholder && headerPlaceholder.querySelector('.navbar') &&
+      footerPlaceholder && footerPlaceholder.querySelector('.footer')) {
+    setupMobileMenu();
+    setupThemeToggle();
+    highlightActiveNavTools();
+    return;
+  }
+
   try {
     const [headerRes, footerRes] = await Promise.all([
       fetch('/components/header.html'),
       fetch('/components/footer.html')
     ]);
     
-    if (headerRes.ok) {
-      const headerPlaceholder = document.getElementById('header-placeholder');
-      if (headerPlaceholder) {
-        headerPlaceholder.innerHTML = await headerRes.text();
-      }
+    if (headerRes.ok && headerPlaceholder) {
+      headerPlaceholder.innerHTML = await headerRes.text();
     }
-    if (footerRes.ok) {
-      const footerPlaceholder = document.getElementById('footer-placeholder');
-      if (footerPlaceholder) {
-        footerPlaceholder.innerHTML = await footerRes.text();
-      }
+    if (footerRes.ok && footerPlaceholder) {
+      footerPlaceholder.innerHTML = await footerRes.text();
     }
     
     setupMobileMenu();
