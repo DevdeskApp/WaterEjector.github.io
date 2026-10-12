@@ -6185,3 +6185,10 @@ body.game-fullscreen-active {
     font-weight: 600;
 }
 
+/* Hide PWA install controls if app is already installed */
+.pwa-installed .nav-install-btn,
+.pwa-installed #navInstallBtn,
+.pwa-installed #pwaInstallBanner {
+    display: none !important;
+}
+

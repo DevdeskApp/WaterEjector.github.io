@@ -3,6 +3,16 @@
   const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
   const theme = saved ? saved : (prefersDark ? 'dark' : 'light');
   document.documentElement.setAttribute('data-theme', theme);
+
+  // Early PWA installation check to prevent install button flash
+  const isInstalled = window.matchMedia('(display-mode: standalone)').matches ||
+                      window.matchMedia('(display-mode: window-controls-overlay)').matches ||
+                      window.navigator.standalone === true ||
+                      document.referrer.includes('android-app://') ||
+                      localStorage.getItem('pwa_installed') === 'true';
+  if (isInstalled) {
+    document.documentElement.classList.add('pwa-installed');
+  }
 })();
 
 let audioContext;
@@ -943,16 +953,60 @@ function setupCookieBanner() {
 // ==========================================
 // PWA INSTALLATION & SERVICE WORKER
 // ==========================================
+// PWA INSTALLATION LOGIC
+// ==========================================
 let deferredInstallPrompt = null;
+
+function isWaterEjectorInstalled() {
+  if (window.matchMedia('(display-mode: standalone)').matches ||
+      window.matchMedia('(display-mode: window-controls-overlay)').matches ||
+      window.navigator.standalone === true ||
+      document.referrer.includes('android-app://')) {
+    return true;
+  }
+  if (localStorage.getItem('pwa_installed') === 'true') {
+    return true;
+  }
+  return false;
+}
+
+function updateInstallButtonVisibility() {
+  const navBtn = document.getElementById('navInstallBtn');
+  if (isWaterEjectorInstalled()) {
+    document.documentElement.classList.add('pwa-installed');
+    if (navBtn) navBtn.style.setProperty('display', 'none', 'important');
+    const banner = document.getElementById('pwaInstallBanner');
+    if (banner) banner.remove();
+    return;
+  }
+
+  // If not installed, show button only if prompt is ready or on iOS
+  const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) && !window.MSStream;
+  if (navBtn) {
+    if (deferredInstallPrompt || isIOS) {
+      navBtn.style.display = 'inline-flex';
+    } else {
+      navBtn.style.display = 'none';
+    }
+  }
+}
+
+// Check via modern getInstalledRelatedApps API
+if ('getInstalledRelatedApps' in navigator) {
+  navigator.getInstalledRelatedApps().then((apps) => {
+    if (apps && apps.length > 0) {
+      localStorage.setItem('pwa_installed', 'true');
+      updateInstallButtonVisibility();
+    }
+  }).catch(() => {});
+}
 
 // Catch beforeinstallprompt early
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
+  if (isWaterEjectorInstalled()) return;
   deferredInstallPrompt = e;
-
-  const navBtn = document.getElementById('navInstallBtn');
-  if (navBtn) navBtn.style.display = 'inline-flex';
-
+  updateInstallButtonVisibility();
   triggerPWAPrompt(false);
 });
 
@@ -962,16 +1016,13 @@ window.addEventListener('appinstalled', () => {
     banner.classList.remove('show');
     setTimeout(() => banner.remove(), 400);
   }
-  const navBtn = document.getElementById('navInstallBtn');
-  if (navBtn) navBtn.style.display = 'none';
   localStorage.setItem('pwa_installed', 'true');
   deferredInstallPrompt = null;
+  updateInstallButtonVisibility();
 });
 
 function triggerPWAPrompt(isManualClick = false) {
-  const isStandalone = window.matchMedia('(display-mode: standalone)').matches ||
-                       window.navigator.standalone === true;
-  if (isStandalone) return;
+  if (isWaterEjectorInstalled()) return;
 
   const dismissedTime = localStorage.getItem('pwa_dismissed_time');
   const now = Date.now();
@@ -1033,8 +1084,10 @@ function triggerPWAPrompt(isManualClick = false) {
         deferredInstallPrompt.prompt();
         const { outcome } = await deferredInstallPrompt.userChoice;
         if (outcome === 'accepted') {
+          localStorage.setItem('pwa_installed', 'true');
           banner.classList.remove('show');
           setTimeout(() => banner.remove(), 400);
+          updateInstallButtonVisibility();
         }
         deferredInstallPrompt = null;
       } else {
@@ -1067,17 +1120,13 @@ function setupPWA() {
     });
   }
 
-  // 2. Setup Header install button
+  // 2. Setup Header install button & check installation state
+  updateInstallButtonVisibility();
   const navBtn = document.getElementById('navInstallBtn');
   if (navBtn) {
-    const isStandalone = window.matchMedia('(display-mode: standalone)').matches ||
-                         window.navigator.standalone === true;
-    if (!isStandalone) {
-      navBtn.style.display = 'inline-flex';
-      navBtn.addEventListener('click', () => {
-        triggerPWAPrompt(true);
-      });
-    }
+    navBtn.addEventListener('click', () => {
+      triggerPWAPrompt(true);
+    });
   }
 
   // 3. Auto-prompt on initial page load if not in standalone and not dismissed
