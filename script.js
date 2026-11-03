@@ -23,6 +23,9 @@ let currentMode = "water";
 let currentSpeaker = "both";
 let progressInterval;
 let vibrationInterval;
+// Incremented on every start/stop so a stopped run's pending timers can't
+// finish (or cut short) a newer run.
+let runId = 0;
 const NEXT_STEPS = {
   water: {
     title: "Water ejection complete!",
@@ -129,6 +132,9 @@ function initializeAudioContext() {
 function setupEventListeners() {
   const startBtn = document.getElementById("startBtn");
   const stopBtn = document.getElementById("stopBtn");
+  // Game pages reuse id="startBtn" for their own Play button; only the cleaner
+  // tool (which has a Stop button) should get the cleaning handlers.
+  if (!stopBtn) return;
   const modeBtns = document.querySelectorAll("button.mode-btn");
   const speakerBtns = document.querySelectorAll(".speaker-btn");
 
@@ -171,36 +177,52 @@ async function startCleaning() {
     await audioContext.resume();
   }
   isPlaying = true;
+  const myRun = ++runId;
   updateUIState(true);
   hideNextStep();
   updateProgress(0, "Starting...");
   switch (currentMode) {
     case "water":
-      await waterEjectMode();
+      await waterEjectMode(myRun);
       break;
     case "dust":
-      await dustRemovalMode();
+      await dustRemovalMode(myRun);
       break;
     case "vibrate":
-      await vibrationMode();
+      await vibrationMode(myRun);
       break;
   }
 }
+function isCurrentRun(id) {
+  return isPlaying && id === runId;
+}
 function stopCleaning() {
   isPlaying = false;
+  runId++;
   stopAllAudio();
   stopVibration();
   clearInterval(progressInterval);
   updateProgress(0, "Stopped");
   updateUIState(false);
+  resetToneButtons();
 }
-async function waterEjectMode() {
+// Stereo / frequency pages: put their toggle buttons back in the idle state
+// (also runs when playback is stopped because the tab was hidden).
+function resetToneButtons() {
+  const stereoBtn = document.getElementById("startStereoBtn");
+  const stereoProgress = document.getElementById("stereoProgress");
+  const freqBtn = document.getElementById("startFreqBtn");
+  if (stereoBtn) stereoBtn.textContent = "Play Test Sound";
+  if (stereoProgress) stereoProgress.style.display = "none";
+  if (freqBtn) freqBtn.textContent = "Play Frequency";
+}
+async function waterEjectMode(myRun) {
   updateProgress(0, "Ejecting water...");
   const duration = 60000;
   playPulsedFrequency(165, duration, 1000, 300);
   animateProgress(duration, "Ejecting water...");
   await sleep(duration);
-  if (isPlaying) {
+  if (isCurrentRun(myRun)) {
     updateProgress(100, "Water ejection complete!");
     stopAllAudio();
     isPlaying = false;
@@ -208,34 +230,35 @@ async function waterEjectMode() {
     showNextStep("water");
   }
 }
-async function dustRemovalMode() {
+async function dustRemovalMode(myRun) {
   updateProgress(0, "Removing dust...");
   const frequencies = [200, 300, 450, 700, 1000, 1500];
   const durationPerFreq = 10000;
   const totalDuration = frequencies.length * durationPerFreq;
   let elapsed = 0;
-  for (let i = 0; i < frequencies.length && isPlaying; i++) {
+  for (let i = 0; i < frequencies.length && isCurrentRun(myRun); i++) {
     const freq = frequencies[i];
     playFrequency(freq, durationPerFreq);
     const startTime = Date.now();
     const endTime = startTime + durationPerFreq;
-    while (Date.now() < endTime && isPlaying) {
+    while (Date.now() < endTime && isCurrentRun(myRun)) {
       elapsed = i * durationPerFreq + (Date.now() - startTime);
       const progress = (elapsed / totalDuration) * 100;
       updateProgress(progress, `Removing dust... ${freq}Hz`);
       await sleep(100);
     }
+    if (!isCurrentRun(myRun)) return;
     stopAllAudio();
     await sleep(500);
   }
-  if (isPlaying) {
+  if (isCurrentRun(myRun)) {
     updateProgress(100, "Dust removal complete!");
     isPlaying = false;
     updateUIState(false);
     showNextStep("dust");
   }
 }
-async function vibrationMode() {
+async function vibrationMode(myRun) {
   const canVibrate = "vibrate" in navigator;
   const statusText = canVibrate ? "Vibrating..." : "Deep bass mode...";
   updateProgress(0, "Vibration mode active...");
@@ -246,7 +269,7 @@ async function vibrationMode() {
   }
   animateProgress(duration, statusText);
   await sleep(duration);
-  if (isPlaying) {
+  if (isCurrentRun(myRun)) {
     updateProgress(100, "Vibration complete!");
     stopAllAudio();
     stopVibration();
@@ -359,6 +382,8 @@ function updateProgress(percent, status) {
   const progressFill = document.getElementById("progressFill");
   const progressPercent = document.getElementById("progressPercent");
   const statusText = document.getElementById("statusText");
+  // Stereo / frequency / game pages have no progress bar.
+  if (!progressFill || !progressPercent || !statusText) return;
   progressFill.style.width = `${percent}%`;
   progressPercent.textContent = `${Math.round(percent)}%`;
   statusText.textContent = status;
@@ -448,6 +473,7 @@ function updateUIState(playing) {
   const stopBtn = document.getElementById("stopBtn");
   const modeBtns = document.querySelectorAll(".mode-btn");
   const speakerBtns = document.querySelectorAll(".speaker-btn");
+  if (!startBtn || !stopBtn) return;
   startBtn.disabled = playing;
   stopBtn.disabled = !playing;
   modeBtns.forEach((btn) => (btn.disabled = playing));
@@ -651,7 +677,10 @@ let stereoPanner = null;
 const startStereoBtn = document.getElementById("startStereoBtn");
 if (startStereoBtn) {
   const speakerBtns = document.querySelectorAll(".speaker-btn");
-  let currentPan = 0; 
+  // Start on whichever channel button is marked active in the HTML (Left),
+  // so the sound matches what the UI shows.
+  const initialActive = document.querySelector(".speaker-btn.active[data-pan]");
+  let currentPan = initialActive ? parseFloat(initialActive.dataset.pan) : 0;
 
   speakerBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -667,8 +696,6 @@ if (startStereoBtn) {
   startStereoBtn.addEventListener("click", async () => {
     if (isPlaying) {
       stopCleaning();
-      startStereoBtn.textContent = "Play Test Sound";
-      document.getElementById("stereoProgress").style.display = "none";
       showNextStep("stereo", true);
       return;
     }
@@ -717,7 +744,6 @@ if (freqSlider && startFreqBtn) {
   startFreqBtn.addEventListener("click", async () => {
     if (isPlaying) {
       stopCleaning();
-      startFreqBtn.textContent = "Play Frequency";
       showNextStep("frequency", true);
       return;
     }
@@ -804,7 +830,8 @@ if (recordBtn) {
       };
       
       mediaRecorder.onstop = () => {
-        const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+        // Safari/iPhone records audio/mp4, not webm - use the real type so playback works.
+        const audioBlob = new Blob(audioChunks, { type: mediaRecorder.mimeType || 'audio/webm' });
         const audioUrl = URL.createObjectURL(audioBlob);
         audioPlayback.src = audioUrl;
 
