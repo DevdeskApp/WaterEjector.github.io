@@ -62,7 +62,8 @@
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
-        gtag('config', 'G-63YJ4Y9W27');
+        gtag('config', 'G-63YJ4Y9W27', { send_page_view: false });
+        gtag('event', 'page_view', { send_to: 'G-63YJ4Y9W27' });
         (function () {
             var done = false;
             function load() {
