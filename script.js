@@ -432,7 +432,7 @@ function showNextStep(mode, stopped) {
   overlay.querySelector(".next-step-close").addEventListener("click", hideNextStep);
   overlay.querySelector(".btn-primary").addEventListener("click", () => {
     if (typeof gtag === "function") {
-      gtag("event", "flow_next_step", { from_mode: mode, stopped: !!stopped });
+      gtag("event", "flow_next_step", { from_mode: mode, stopped: !!stopped, send_to: "G-63YJ4Y9W27" });
     }
   });
   overlay.querySelector("#runAgainBtn").addEventListener("click", () => {
@@ -454,7 +454,7 @@ function showNextStep(mode, stopped) {
   document.body.appendChild(overlay);
   document.body.classList.add("modal-open");
   if (typeof gtag === "function") {
-    gtag("event", stopped ? "clean_stopped" : "clean_complete", { mode: mode });
+    gtag("event", stopped ? "clean_stopped" : "clean_complete", { mode: mode, send_to: "G-63YJ4Y9W27" });
   }
 }
 function hideNextStep() {
