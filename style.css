@@ -6192,3 +6192,18 @@ body.game-fullscreen-active {
     display: none !important;
 }
 
+/* Keep the header pinned on scroll: .navbar is sticky, but it sits inside #header-placeholder,
+   which is only as tall as the navbar, so the wrapper itself has to be the sticky element. */
+#header-placeholder {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* Deep clean sweep table: drop the Stage column on phones so the description has room */
+@media (max-width: 600px) {
+    .sweep-table th:nth-child(3),
+    .sweep-table td:nth-child(3) { display: none; }
+    .sweep-table th,
+    .sweep-table td { padding: 10px 8px; }
+}

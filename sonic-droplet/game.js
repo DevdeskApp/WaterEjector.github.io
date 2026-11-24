@@ -65,7 +65,16 @@
         { id: 'solar', name: 'Volcanic Flame', cost: 350, glow: '#ef4444', c1: '#fee2e2', c2: '#f97316', c3: '#dc2626' }
     ];
 
-    let unlockedSkins = JSON.parse(localStorage.getItem('we_unlocked_skins') || '["classic"]');
+    // Escape text that comes from share links before it goes into innerHTML.
+    function escapeHtml(value) {
+        return String(value).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+    }
+
+    let unlockedSkins = ['classic'];
+    try {
+        const saved = JSON.parse(localStorage.getItem('we_unlocked_skins') || '["classic"]');
+        if (Array.isArray(saved)) unlockedSkins = saved.filter(id => typeof id === 'string');
+    } catch (err) { /* corrupted storage: fall back to the default skin */ }
     let selectedSkinId = localStorage.getItem('we_selected_skin') || 'classic';
 
     // Player Droplet State
@@ -232,14 +241,16 @@
         try {
             const jsonStr = decodeURIComponent(atob(hashString));
             const parsed = JSON.parse(jsonStr);
-            if (parsed && typeof parsed.s === 'number' && parsed.sd && Array.isArray(parsed.p)) {
+            // Challenge links are user supplied: validate every field before using it.
+            if (parsed && Number.isFinite(parsed.s) && parsed.sd && Array.isArray(parsed.p)) {
+                const name = typeof parsed.n === 'string' ? parsed.n.trim().slice(0, 24) : '';
                 return {
-                    name: parsed.n || 'Challenger',
-                    score: parsed.s,
+                    name: name || 'Challenger',
+                    score: Math.max(0, Math.min(1e6, Math.round(parsed.s))),
                     seed: parsed.sd,
-                    mode: parsed.m || 'WATER',
-                    skinId: parsed.k || 'classic',
-                    samples: parsed.p.map(val => val / 255),
+                    mode: ['WATER', 'DUST', 'VIBRATION'].includes(parsed.m) ? parsed.m : 'WATER',
+                    skinId: SKINS.some(s => s.id === parsed.k) ? parsed.k : 'classic',
+                    samples: parsed.p.slice(0, 20000).map(val => (Number(val) || 0) / 255),
                     currentIndex: 0,
                     x: 0,
                     y: 0,
@@ -644,15 +655,15 @@
             if (currentScore > activeGhost.score) {
                 if (victoryBadge) victoryBadge.classList.remove('hidden');
                 if (defeatBadge) defeatBadge.classList.add('hidden');
-                if (ghostResultText) ghostResultText.innerHTML = `🏆 <strong style="color: #10B981;">Record Shattered!</strong> You beat <strong>${activeGhost.name}</strong>'s score of ${activeGhost.score} by <strong>+${currentScore - activeGhost.score}</strong> points!`;
+                if (ghostResultText) ghostResultText.innerHTML = `🏆 <strong style="color: #10B981;">Record Shattered!</strong> You beat <strong>${escapeHtml(activeGhost.name)}</strong>'s score of ${activeGhost.score} by <strong>+${currentScore - activeGhost.score}</strong> points!`;
             } else if (currentScore === activeGhost.score) {
                 if (victoryBadge) victoryBadge.classList.remove('hidden');
                 if (defeatBadge) defeatBadge.classList.add('hidden');
-                if (ghostResultText) ghostResultText.innerHTML = `🤝 <strong style="color: #38bdf8;">Tied!</strong> Matched <strong>${activeGhost.name}</strong> at ${currentScore} points.`;
+                if (ghostResultText) ghostResultText.innerHTML = `🤝 <strong style="color: #38bdf8;">Tied!</strong> Matched <strong>${escapeHtml(activeGhost.name)}</strong> at ${currentScore} points.`;
             } else {
                 if (defeatBadge) defeatBadge.classList.remove('hidden');
                 if (victoryBadge) victoryBadge.classList.add('hidden');
-                if (ghostResultText) ghostResultText.innerHTML = `⚡ <strong style="color: #38bdf8;">Keep Cleaning!</strong> <strong>${activeGhost.name}</strong> was ${activeGhost.score - currentScore} points ahead.`;
+                if (ghostResultText) ghostResultText.innerHTML = `⚡ <strong style="color: #38bdf8;">Keep Cleaning!</strong> <strong>${escapeHtml(activeGhost.name)}</strong> was ${activeGhost.score - currentScore} points ahead.`;
             }
         } else {
             if (victoryBadge) victoryBadge.classList.add('hidden');
